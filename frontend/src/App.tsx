@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Masking from './components/Masking'
 import './App.css'
 
