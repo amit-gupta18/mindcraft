@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Shield, Download } from "lucide-react";
 
 type ImagePreviewProps = {
-  originalImageUrl: string | null;
-  maskedImageUrl: string | null;
+  originalImageUrl?: string | null;
+  maskedImageUrl?: string | null;
 };
 
 export default function Preview({ originalImageUrl, maskedImageUrl }: ImagePreviewProps) {

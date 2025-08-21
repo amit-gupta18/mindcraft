@@ -110,8 +110,13 @@ export default function Masking() {
 
         {/* ------ Preview images ---------- */}
 
-        {(originalImageUrl || maskedImageUrl) && (
-          <Preview originalImageUrl={originalImageUrl} maskedImageUrl={maskedImageUrl} />
+        {/* preview masked image first  */}
+        {maskedImageUrl && (
+          <Preview maskedImageUrl={maskedImageUrl} />
+        )}
+
+        {originalImageUrl && (
+          <Preview originalImageUrl={originalImageUrl} />
         )}
       </div>
     </div>
