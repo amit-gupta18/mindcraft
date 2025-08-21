@@ -1,13 +1,11 @@
-import Masking from './components/Masking'
-import './App.css'
+import React from "react";
+import Masking from "./components/Masking";
 
-function App() {
+const App: React.FC = () => {
 
   return (
-    <div>
-      <Masking />
-    </div>
-  )
-}
+    <Masking/>
+  );
+};
 
-export default App
+export default App;
