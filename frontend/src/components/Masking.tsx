@@ -77,7 +77,7 @@ export default function Masking() {
             error={error}
           />
         )}
-        {isProcessing && <Processing/>}
+        {isProcessing && <Processing />}
 
 
 
@@ -111,12 +111,8 @@ export default function Masking() {
         {/* ------ Preview images ---------- */}
 
         {/* preview masked image first  */}
-        {maskedImageUrl && (
-          <Preview maskedImageUrl={maskedImageUrl} />
-        )}
-
-        {originalImageUrl && (
-          <Preview originalImageUrl={originalImageUrl} />
+        {(originalImageUrl || maskedImageUrl) && (
+          <Preview originalImageUrl={originalImageUrl} maskedImageUrl={maskedImageUrl} />
         )}
       </div>
     </div>
