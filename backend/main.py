@@ -1,5 +1,6 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import StreamingResponse
+from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
 import io
 import pytesseract
@@ -10,12 +11,25 @@ import logging
 
 app = FastAPI()
 
+# allow CORS 
+origins = ["*"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 @app.get("/")
 def root():
     return {"message": "PII Masking API running"}
 
 @app.post("/mask_pii/")
 async def mask_pii(file: UploadFile = File(...)):
+    print("Inside API")
+    print(file)
     if not file.content_type.startswith("image/"):
         raise HTTPException(status_code=400, detail="Invalid file type. Please upload an image.")
 
