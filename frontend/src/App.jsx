@@ -1,35 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+// import { ImageUpload } from "./ImageUpload";
+import { ImageUpload } from "./components/ImageUpload";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handleImageSelect = async (file) => {
+    console.log("Selected file:", file);
+    setSelectedImage(file);
+
+    // 🔹 Example backend upload
+    setIsProcessing(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch("http://localhost:8000/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+      console.log("Backend response:", data);
+    } catch (err) {
+      console.error("Upload failed:", err);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div style={{ padding: "40px", fontFamily: "Arial" }}>
+      <h1>Image Upload Wireframe</h1>
 
-export default App
+      <ImageUpload
+        onImageSelect={handleImageSelect}
+        isProcessing={isProcessing}
+      />
+
+      {selectedImage && (
+        <div style={{ marginTop: "20px" }}>
+          <h3>Preview:</h3>
+          <img
+            src={URL.createObjectURL(selectedImage)}
+            alt="preview"
+            width={200}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
